@@ -8,6 +8,8 @@ const incomeList = document.getElementById("income-list");
 const expenseList = document.getElementById("expense-list");
 const totalIncome = document.getElementById("total-income");
 const totalExpense = document.getElementById("total-expense");
+const totalBudget = document.getElementById("total-budget");
+
 function formatMoney(value) {
   return Math.abs(Number(value)).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -31,15 +33,15 @@ calculateIncome();
  * Task 1: Calculate total expense
  */
 function calculateExpense() {
-  let sum = 0;
+  let cost = 0;
   for (let item of expenseList.children) {
     const valueString =
       item.children[0].children[1].children[0].innerHTML.replace(/,/g, "");
 
     console.log(parseFloat(valueString));
-    sum += parseFloat(valueString);
+    cost += parseFloat(valueString);
   }
-  totalExpense.innerHTML = formatMoney(sum);
+  totalExpense.innerHTML = formatMoney(cost);
 }
 calculateExpense();
 
@@ -47,7 +49,12 @@ calculateExpense();
  * Task 2: Calculate the budget
  */
 
-function calculateBudget() {}
+function calculateBudget() {
+  const income_value = totalIncome.innerHTML.replace(/,/g, "");
+  const expense_value = totalExpense.innerHTML.replace(/,/g, "");
+  budget = parseFloat(income_value) - parseFloat(expense_value);
+  totalBudget.innerHTML = formatMoney(budget);
+}
 calculateBudget();
 /**
  * Task 3: Delete Entry

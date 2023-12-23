@@ -40,6 +40,7 @@ function calculateExpense() {
 
     console.log(parseFloat(valueString));
     cost += parseFloat(valueString);
+    //console.log(cost);
   }
   totalExpense.innerHTML = formatMoney(cost);
 }
@@ -59,7 +60,23 @@ calculateBudget();
 /**
  * Task 3: Delete Entry
  */
-function deleteEntry() {}
+
+function deleteEntry(event) {
+  // console.log('clicked');
+  const deleteList = event.target;
+  // console.log(deleteList);
+
+  if (deleteList.classList.contains("delete-list")) {
+    const listItem = deleteList.closest("li");
+    console.log(listItem);
+
+    listItem.parentNode.removeChild(listItem);
+    calculateIncome();
+    calculateExpense();
+    calculateBudget();
+  }
+}
+// deleteEntry();
 
 function addEntry() {
   const type = selectInput.value;
@@ -90,8 +107,8 @@ function addEntry() {
         <span>${description}</span>
         <div>
           <span class="${colorClass}">${sign}${formatMoney(value)}</span>
-          <span
-            class="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block"
+          <span 
+            class="ml-2 hidden cursor-pointer font-medium text-red-500 group-hover:inline-block delete-list"
           >
             Delete
           </span>
@@ -105,6 +122,10 @@ function addEntry() {
 
   // update total income value
   calculateIncome();
+  calculateExpense();
+  calculateBudget();
 }
 
 addExpenseButton.addEventListener("click", addEntry);
+incomeList.addEventListener("click", deleteEntry);
+expenseList.addEventListener("click", deleteEntry);
